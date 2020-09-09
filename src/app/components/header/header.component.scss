@@ -1,0 +1,24 @@
+.nav-link, .navbar-brand, .navbar-toggler-icon {
+  color: #FFF;
+}
+
+.nav-link:hover {
+  font-weight: bold;
+}
+
+@media (min-width: 992px){
+  .navbar-expand-lg .navbar-collapse {
+      padding-left: 30px;
+  }
+
+  .navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+}
+
+@media (max-width: 767px){
+  .container, .container-sm {
+      max-width: 100%;
+  }
+}

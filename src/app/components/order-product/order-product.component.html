@@ -1,0 +1,27 @@
+<h3 class="text-center">Order Product</h3>
+<div class="product-list">
+  <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="message == 'Success'">
+    <strong>Success!</strong> Your order placed successfully...
+    <br><strong><a routerLink="/"> Back to Home</a></strong>
+  </div>
+  <div class="alert alert-danger alert-dismissible fade show text-center" role="alert" *ngIf="message == 'Failed'">
+    <strong>Failed!</strong> Something went wrong!
+    <br><strong><a routerLink="/"> Back to Home</a></strong>
+  </div>
+  <div class="card product" *ngIf="message == ''">
+    <div class="card-body">
+      <h5 class="card-title">{{ product.productName }}</h5>
+      <h6 class="card-subtitle mb-2 text-success" *ngIf="product.availableQuantity > 0">Available Stock: {{ product.availableQuantity }}</h6>
+      <h6 class="card-subtitle mb-2 text-danger"  *ngIf="product.availableQuantity == 0">No Stock</h6>
+    </div>
+    <div class="card-footer">
+      <form #orderform="ngForm" (ngSubmit)="orderform.valid && order()">
+        <input type="number" name="quantity" id="quantity" [(ngModel)]="orderForm.quantity" #quantity="ngModel" class="form-control quantity" min="1" [max]="product.availableQuantity" placeholder="Quantity" (input)="onChange()" required>
+        <button type="submit" class="btn btn-primary" (click)="order()" [disabled]="btnDisable">{{ btnDisable ? 'Processing' : 'Order' }}</button>
+        <p class="text-danger" *ngIf="quantity.invalid && (quantity.dirty || quantity.touched || quantity.errors.min)">Minimum 1 quantity required</p>
+        <p class="text-danger" *ngIf="messageText != ''">{{ messageText }}</p>
+      </form>
+    </div>
+  </div>
+</div>
+

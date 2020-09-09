@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "https://uiexercise.onemindindia.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
