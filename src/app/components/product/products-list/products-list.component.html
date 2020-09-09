@@ -9,7 +9,7 @@
       <h5 class="card-title">{{ product.productName }}</h5>
       <h6 class="card-subtitle mb-2 text-success" *ngIf="product.availableQuantity > 0">Available Stock: {{ product.availableQuantity }}</h6>
       <h6 class="card-subtitle mb-2 text-danger"  *ngIf="product.availableQuantity == 0">No Stock</h6>
-      <div class="text-right">
+      <div class="text-right" *ngIf="product.availableQuantity > 0">
         <a [routerLink]="['/order', i]" class="card-link btn btn-sm btn-primary text-right">Order</a>
       </div>
     </div>

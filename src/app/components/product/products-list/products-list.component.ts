@@ -26,4 +26,9 @@ export class ProductsListComponent implements OnInit {
     }));
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+    this.productList = null;
+  }
+
 }

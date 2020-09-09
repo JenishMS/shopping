@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../models/custom-validator';
 import { AppService } from 'src/app/services/app.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-product',
@@ -15,6 +16,7 @@ export class AddProductComponent implements OnInit {
   });
   message = '';
   btnDisable = false;
+  subscription = new Subscription();
 
   constructor(private appService: AppService) { }
 
@@ -30,7 +32,7 @@ export class AddProductComponent implements OnInit {
     if(this.addProductForm.valid) {
       this.btnDisable = true;
       this.addProductForm.value.availableQuantity = parseInt(this.addProductForm.value.availableQuantity);
-      this.appService.addProduct(this.addProductForm.value).subscribe(response => {
+      this.subscription.add(this.appService.addProduct(this.addProductForm.value).subscribe(response => {
         if(response === true){
           this.message = 'Success';
           this.addProductForm.reset();
@@ -43,7 +45,7 @@ export class AddProductComponent implements OnInit {
       }, err => {
         this.message = 'Failed';
         this.btnDisable = false;
-      });
+      }));
     }
   }
 
@@ -59,6 +61,11 @@ export class AddProductComponent implements OnInit {
       return false;
     else
       return true;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+
   }
 
 }

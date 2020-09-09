@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 import { AppService } from 'src/app/services/app.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-order-product',
@@ -16,13 +17,14 @@ export class OrderProductComponent implements OnInit {
   message = '';
   messageText = '';
   btnDisable = false;
+  subscription = new Subscription();
 
   constructor(private appService: AppService, private  route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(paramsData => {
       if(paramsData.id){
-        this.appService.productList.subscribe(data => {
+        this.subscription.add(this.appService.productList.subscribe(data => {
           if(data.length == 0){
             this.router.navigate(['/']);
           }else{
@@ -30,7 +32,7 @@ export class OrderProductComponent implements OnInit {
           }
         }, err => {
           console.error(err);
-        });
+        }));
       }
       else{
         this.router.navigate['/'];
@@ -81,5 +83,9 @@ export class OrderProductComponent implements OnInit {
     }else{
       this.messageText = '';
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
